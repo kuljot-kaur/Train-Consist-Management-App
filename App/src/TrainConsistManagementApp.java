@@ -1,47 +1,41 @@
-import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+package main;
 
-public class TrainConsistManagementApp {
+import java.util.List;
 
-    public static void main(String[] args) {
+public class UseCase12TrainConsistMgmt {
 
-        Scanner scanner = new Scanner(System.in);
+    public static class GoodsBogie {
+        private final String type;
+        private final String cargo;
 
-        // Regex patterns
-        String trainIdRegex = "TRN-\\d{4}";
-        String cargoCodeRegex = "PET-[A-Z]{2}";
-
-        // Compile patterns
-        Pattern trainPattern = Pattern.compile(trainIdRegex);
-        Pattern cargoPattern = Pattern.compile(cargoCodeRegex);
-
-        // User input
-        System.out.print("Enter Train ID: ");
-        String trainId = scanner.nextLine();
-
-        System.out.print("Enter Cargo Code: ");
-        String cargoCode = scanner.nextLine();
-
-        // Create matchers
-        Matcher trainMatcher = trainPattern.matcher(trainId);
-        Matcher cargoMatcher = cargoPattern.matcher(cargoCode);
-
-        // Validation
-        System.out.println("\n--- Validation Result ---");
-
-        if (trainMatcher.matches()) {
-            System.out.println("Train ID is VALID");
-        } else {
-            System.out.println("Train ID is INVALID");
+        public GoodsBogie(String type, String cargo) {
+            this.type = type;
+            this.cargo = cargo;
         }
 
-        if (cargoMatcher.matches()) {
-            System.out.println("Cargo Code is VALID");
-        } else {
-            System.out.println("Cargo Code is INVALID");
+        public String getType() {
+            return type;
         }
 
-        scanner.close();
+        public String getCargo() {
+            return cargo;
+        }
+    }
+
+    /**
+     * Checks if all goods bogies comply with safety rules:
+     * Cylindrical bogies can only carry "Petroleum".
+     * Other bogie types have no cargo restriction.
+     * @param bogies list of goods bogies
+     * @return true if safe, false otherwise
+     */
+    public boolean isTrainSafetyCompliant(List<GoodsBogie> bogies) {
+        return bogies.stream()
+                .allMatch(bogie -> {
+                    if ("Cylindrical".equalsIgnoreCase(bogie.getType())) {
+                        return "Petroleum".equalsIgnoreCase(bogie.getCargo());
+                    }
+                    return true; // no restriction for other types
+                });
     }
 }
