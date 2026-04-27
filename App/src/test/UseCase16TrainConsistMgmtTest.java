@@ -1,13 +1,12 @@
 package test;
 
-import main.UseCase15SafeCargoAssignment;
-import main.UseCase15SafeCargoAssignment.GoodsBogie;
+import main.UseCase16BubbleSort.GoodsBogie;
 
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class UseCase15TrainConsistMgmtTest {
+public class UseCase16TrainConsistMgmtTest {
 
     @Test
     void testCargo_SafeAssignment() {
